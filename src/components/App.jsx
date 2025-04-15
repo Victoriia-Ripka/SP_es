@@ -1,42 +1,17 @@
-import '@nlux/themes/nova.css';
-import { AiChat, AiChatUI } from '@nlux/react';
-import { useChatAdapter } from '@nlux/nlbridge-react';
-
-const adapterOptions = {
-  url: 'http://localhost:8080/chat-api',
-};
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import { Container } from '@mui/material';
+import { Chat } from "./Chat/Chat";
 
 export const App = () => {
-  const nlbridgeAdapter = useChatAdapter(adapterOptions);
-
-  const assistantCssStyle = {
-    background: 'linear-gradient(#c8bdff, #55d7fe)',
-    fontSize: '1.5rem',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    height: '100%'
-  };
 
   return (
-    <AiChat
-      adapter={nlbridgeAdapter}
-      personaOptions={{
-        assistant: {
-          name: 'Експерт',
-          avatar: <span style={ assistantCssStyle }>🤖</span>,
-          tagline: 'Експертна система у проєктуванні СЕС',
-        }
-      }}
-      composerOptions={{
-        placeholder: 'Яку сонячну електростанцію ви б хотіли?'
-      }}
-      displayOptions={{ colorScheme: 'light' }}
-    >
-      <AiChatUI.Loader>
-        <span className="rounded">Loading 👻</span>
-      </AiChatUI.Loader>
-    </AiChat>
+    <Container maxWidth="sm">
+      <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}> 
+        <p>Якийсь заголовок тут</p>
+      </Box>
+
+      <Chat />
+    </Container>
   );
 };
