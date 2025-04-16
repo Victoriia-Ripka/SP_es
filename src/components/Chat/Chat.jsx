@@ -1,42 +1,35 @@
-import '@nlux/themes/nova.css';
-import { AiChat, AiChatUI } from '@nlux/react';
-import { useChatAdapter } from '@nlux/nlbridge-react';
+import React, { useState } from 'react';
+import Box from '@mui/material/Box';
+import { Container } from '@mui/material';
+import { Form } from 'components/Form/Form';
+import axios from 'axios';
+import { MessagesHistory } from 'components/MessageHistory/MessageHistory';
 
-const adapterOptions = {
-    url: `${process.env.DEV_BACKEND_API}/chat-api`,
-};
-
-const assistantCssStyle = {
-    background: 'linear-gradient(#c8bdff, #55d7fe)',
-    fontSize: '1.5rem',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    height: '100%'
-};
+const backendUrl = process.env.REACT_APP_BACKEND_API;
 
 export const Chat = () => {
-    const nlbridgeAdapter = useChatAdapter(adapterOptions);
+    const [messages, setMessages] = useState([]);
+    const [, setData] = useState([]);
+
+    const onSend = async (message) => {
+        try {
+            const response = await axios.post(`${backendUrl}/assistant/ask`, { message });
+            console.log('Response:', response);
+            setMessages((prevMessages) => [...prevMessages, { message, role: "user" }]);
+            setMessages((prevMessages) => [...prevMessages, { message: response.data.answer, role: "assistant" }]);
+            setData((prevData) => [...prevData, response])
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
 
     return (
-        <AiChat
-            adapter={nlbridgeAdapter}
-            personaOptions={{
-                assistant: {
-                    name: 'Експерт',
-                    avatar: <span style={assistantCssStyle}>🤖</span>,
-                    // tagline: 'Експертна система у проєктуванні СЕС',
-                }
-            }}
-            composerOptions={{
-                placeholder: 'Добрий день. Для яких потреб Вам потрібна СЕС? '
-            }}
-            displayOptions={{ colorScheme: 'light' }}
-        >
-            <AiChatUI.Loader>
-                <span className="rounded">Loading 👻</span>
-            </AiChatUI.Loader>
-        </AiChat>
+        <Container disableGutters sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+            <Box sx={{ flex: 1, overflowY: 'auto', border: '1px solid #ccc', p: 2 }}>
+                <MessagesHistory messages={messages} />
+            </Box>
+
+            <Form sx={{ p: 2 }} onSend={onSend} />
+        </Container>
     );
-}
+};
