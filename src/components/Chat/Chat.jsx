@@ -20,9 +20,9 @@ export const Chat = () => {
 
     const onSend = async (message) => {
         setMessages((prevMessages) => [...prevMessages, { message, role: "user" }]);
-        
+
         try {
-            const response = await axios.post(`${backendUrl}/assistant/ask`, { message, data });
+            const response = await axios.post(`${backendUrl}/assistant/ask`, { message, pv_user_data: data });
             console.log('Response:', response);
             setMessages((prevMessages) => [...prevMessages, { message: response.data.answer, role: "assistant" }]);
             setData(response.updated_user_data);
