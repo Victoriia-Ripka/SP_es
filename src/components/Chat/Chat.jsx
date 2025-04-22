@@ -7,20 +7,30 @@ import { MessagesHistory } from 'components/MessageHistory/MessageHistory';
 
 const backendUrl = process.env.REACT_APP_BACKEND_API;
 
+let pv_user_data = {
+    pv_type: "",
+    power: 0,
+    pv_square: 0,
+    messages_count: 1
+}
+
 export const Chat = () => {
     const [messages, setMessages] = useState([]);
-    const [, setData] = useState([]);
+    const [data, setData] = useState(pv_user_data);
 
     const onSend = async (message) => {
+        setMessages((prevMessages) => [...prevMessages, { message, role: "user" }]);
+        
         try {
-            const response = await axios.post(`${backendUrl}/assistant/ask`, { message });
+            const response = await axios.post(`${backendUrl}/assistant/ask`, { message, data });
             console.log('Response:', response);
-            setMessages((prevMessages) => [...prevMessages, { message, role: "user" }]);
             setMessages((prevMessages) => [...prevMessages, { message: response.data.answer, role: "assistant" }]);
-            setData((prevData) => [...prevData, response])
+            setData(response.updated_user_data);
         } catch (error) {
             console.error('Error:', error);
         }
+
+        console.log(data);
     };
 
     return (
