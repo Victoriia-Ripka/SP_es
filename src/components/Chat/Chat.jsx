@@ -16,21 +16,21 @@ let pv_user_data = {
 
 export const Chat = () => {
     const [messages, setMessages] = useState([]);
-    const [data, setData] = useState(pv_user_data);
+    const [pv_data, setPVData] = useState(pv_user_data);
 
     const onSend = async (message) => {
         setMessages((prevMessages) => [...prevMessages, { message, role: "user" }]);
 
         try {
-            const response = await axios.post(`${backendUrl}/assistant/ask`, { message, pv_user_data: data });
-            console.log('Response:', response);
-            setMessages((prevMessages) => [...prevMessages, { message: response.data.answer, role: "assistant" }]);
-            setData(response.updated_user_data);
+            const response = await axios.post(`${backendUrl}/assistant/ask`, { message, pv_user_data: pv_data });
+            const data = response.data;
+            setMessages((prevMessages) => [...prevMessages, { message: data.answer, role: "assistant" }]);
+            setPVData(data.updated_user_data);
         } catch (error) {
             console.error('Error:', error);
         }
 
-        console.log(data);
+        console.log(pv_data);
     };
 
     return (
