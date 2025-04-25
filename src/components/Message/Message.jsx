@@ -18,7 +18,7 @@ export const Message = ({ message }) => {
             <Typography variant="body2" fontWeight="bold" gutterBottom>
                 {isUser ? 'Ви' : 'Асистент'}
             </Typography>
-            <Typography variant="body1">
+            <Typography variant="body1" align="left">
                 {message.message}
             </Typography>
         </Box>

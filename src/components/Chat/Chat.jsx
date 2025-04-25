@@ -4,33 +4,51 @@ import { Container } from '@mui/material';
 import { Form } from 'components/Form/Form';
 import axios from 'axios';
 import { MessagesHistory } from 'components/MessageHistory/MessageHistory';
+import { useEffect } from 'react';
 
 const backendUrl = process.env.REACT_APP_BACKEND_API;
 
-let pv_user_data = {
-    pv_type: "",
+const pvStartedData = {
+    intent: "",
+    pvType: "",
     power: 0,
-    pv_square: 0,
-    messages_count: 1
+    pvSquare: 0,
+    pvInstalationPlace: "",
+    messagesCount: 0
 }
 
+// TODO: знайти де губиться pvData
 export const Chat = () => {
     const [messages, setMessages] = useState([]);
-    const [pv_data, setPVData] = useState(pv_user_data);
+    const [pvData, setPVData] = useState(pvStartedData);
 
-    const onSend = async (message) => {
+    useEffect(() => {
+        console.log(pvData)
+        axios.get(`${backendUrl}/assistant/start`, { pv_user_data: pvData })
+            .then((res) => {
+                const data = res.data;
+                console.log(res)
+                setMessages((prevMessages) => [...prevMessages, { message: data.answer, role: "assistant" }]);
+                setPVData(data.pv_user_data);
+            }).catch(err => console.log(err))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const onSend = (message) => {
         setMessages((prevMessages) => [...prevMessages, { message, role: "user" }]);
 
-        try {
-            const response = await axios.post(`${backendUrl}/assistant/ask`, { message, pv_user_data: pv_data });
-            const data = response.data;
-            setMessages((prevMessages) => [...prevMessages, { message: data.answer, role: "assistant" }]);
-            setPVData(data.updated_user_data);
-        } catch (error) {
-            console.error('Error:', error);
-        }
+        const updatedUserData = {
+            ...pvData,
+            messagesCount: pvData.messagesCount + 1
+        };
 
-        console.log(pv_data);
+        axios.post(`${backendUrl}/assistant/ask`, { message, pv_user_data: updatedUserData })
+            .then(res => {
+                const data = res.data;
+                // added new updated user data from backend
+                setMessages((prevMessages) => [...prevMessages, { message: data.answer, role: "assistant" }]);
+                setPVData(data.updated_user_data);
+            }).catch(err => console.error(err))
     };
 
     return (
