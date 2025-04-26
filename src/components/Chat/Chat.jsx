@@ -6,7 +6,9 @@ import axios from 'axios';
 import { MessagesHistory } from 'components/MessageHistory/MessageHistory';
 import { useEffect } from 'react';
 
-const backendUrl = process.env.REACT_APP_BACKEND_API;
+
+const backendUrl = 'https://sp-es-backend.onrender.com'
+// const backendUrl = process.env.REACT_APP_BACKEND_API;
 
 const pvStartedData = {
     intent: "",
