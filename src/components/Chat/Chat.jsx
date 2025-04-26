@@ -43,13 +43,17 @@ export const Chat = () => {
 
     useEffect(() => {
         // if (Object.keys(messages).length === 0) {
-            axios.post(`${backendUrl}/assistant/start`, { pv_user_data: pvData })
-                .then((res) => {
-                    const data = res.data;
-                    setMessages((prevMessages) => [...prevMessages, { message: data.answer, role: "assistant" }]);
-                    setPVData(data.updated_user_data);
-                })
-                .catch((err) => console.log(err));
+        axios.post(`${backendUrl}/assistant/start`, { pv_user_data: pvData }, {
+            headers: {
+                'Origin': 'https://victoriia-ripka.github.io', // Explicitly set the origin
+            }
+        })
+            .then((res) => {
+                const data = res.data;
+                setMessages((prevMessages) => [...prevMessages, { message: data.answer, role: "assistant" }]);
+                setPVData(data.updated_user_data);
+            })
+            .catch((err) => console.log(err));
         // }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -62,7 +66,12 @@ export const Chat = () => {
             messagesCount: pvData.messagesCount + 1
         };
 
-        axios.post(`${backendUrl}/assistant/ask`, { message, pv_user_data: updatedUserData })
+        axios.post(`${backendUrl}/assistant/ask`, { message, pv_user_data: updatedUserData }
+            ,{
+                headers: {
+                    'Origin': 'https://victoriia-ripka.github.io', // Explicitly set the origin
+                }
+            })
             .then(res => {
 
                 const data = res.data;
