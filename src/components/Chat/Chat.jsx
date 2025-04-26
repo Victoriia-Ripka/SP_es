@@ -10,27 +10,45 @@ const backendUrl = process.env.REACT_APP_BACKEND_API;
 
 const pvStartedData = {
     intent: "",
-    pvType: "",
     power: 0,
+    pvType: "",
     pvSquare: 0,
     pvInstalationPlace: "",
+
+    cache: {},
     messagesCount: 0
 }
 
-// TODO: знайти де губиться pvData
 export const Chat = () => {
-    const [messages, setMessages] = useState([]);
-    const [pvData, setPVData] = useState(pvStartedData);
+    const [messages, setMessages] = useState([])
+    const [pvData, setPVData] = useState(pvStartedData)
+    // const [messages, setMessages] = useState(() => {
+    //     const savedMessages = localStorage.getItem("messages");
+    //     return savedMessages ? JSON.parse(savedMessages) : [];
+    // });
+    // const [pvData, setPVData] = useState(() => {
+    //     const savedPvData = localStorage.getItem("pvData");
+    //     return savedPvData ? JSON.parse(savedPvData) : pvStartedData;
+    // });
+
+    // useEffect(() => {
+    //     localStorage.setItem("pvData", JSON.stringify(pvData));
+    // }, [pvData]);
+
+    // useEffect(() => {
+    //     localStorage.setItem("messages", JSON.stringify(messages));
+    // }, [messages]);
 
     useEffect(() => {
-        console.log(pvData)
-        axios.get(`${backendUrl}/assistant/start`, { pv_user_data: pvData })
-            .then((res) => {
-                const data = res.data;
-                console.log(res)
-                setMessages((prevMessages) => [...prevMessages, { message: data.answer, role: "assistant" }]);
-                setPVData(data.pv_user_data);
-            }).catch(err => console.log(err))
+        // if (Object.keys(messages).length === 0) {
+            axios.post(`${backendUrl}/assistant/start`, { pv_user_data: pvData })
+                .then((res) => {
+                    const data = res.data;
+                    setMessages((prevMessages) => [...prevMessages, { message: data.answer, role: "assistant" }]);
+                    setPVData(data.updated_user_data);
+                })
+                .catch((err) => console.log(err));
+        // }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -44,11 +62,14 @@ export const Chat = () => {
 
         axios.post(`${backendUrl}/assistant/ask`, { message, pv_user_data: updatedUserData })
             .then(res => {
+
                 const data = res.data;
                 // added new updated user data from backend
                 setMessages((prevMessages) => [...prevMessages, { message: data.answer, role: "assistant" }]);
                 setPVData(data.updated_user_data);
-            }).catch(err => console.error(err))
+            }).catch(err => console.error(err)).finally(
+                console.log(pvData)
+            )
     };
 
     return (
