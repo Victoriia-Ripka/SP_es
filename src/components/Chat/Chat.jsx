@@ -11,13 +11,16 @@ const backendUrl = 'https://sp-es-backend.onrender.com'
 // const backendUrl = process.env.REACT_APP_BACKEND_API;
 
 const pvStartedData = {
-    intent: "",
+    intent: "", // актуальний намір користувача
     power: 0,
     pvType: "",
     pvSquare: 0,
     pvInstalationPlace: "",
 
-    cache: {},
+    cache: {
+        history: [],
+        original_intent: '' // оригінальний намір експертної системи
+    },
     messagesCount: 0
 }
 
@@ -43,11 +46,7 @@ export const Chat = () => {
 
     useEffect(() => {
         // if (Object.keys(messages).length === 0) {
-        axios.post(`${backendUrl}/assistant/start`, { pv_user_data: pvData }, {
-            headers: {
-                'Origin': 'https://victoriia-ripka.github.io', // Explicitly set the origin
-            }
-        })
+        axios.post(`${backendUrl}/assistant/start`, { pv_user_data: pvData })
             .then((res) => {
                 const data = res.data;
                 setMessages((prevMessages) => [...prevMessages, { message: data.answer, role: "assistant" }]);
@@ -66,12 +65,7 @@ export const Chat = () => {
             messagesCount: pvData.messagesCount + 1
         };
 
-        axios.post(`${backendUrl}/assistant/ask`, { message, pv_user_data: updatedUserData }
-            ,{
-                headers: {
-                    'Origin': 'https://victoriia-ripka.github.io', // Explicitly set the origin
-                }
-            })
+        axios.post(`${backendUrl}/assistant/ask`, { message, pv_user_data: updatedUserData })
             .then(res => {
 
                 const data = res.data;
