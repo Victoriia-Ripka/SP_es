@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Box, Button, TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Checkbox, Typography } from '@mui/material';
-import axios from 'axios';
+import { Box, Button, TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Typography } from '@mui/material';
+// import axios from 'axios';
 
-export const DataForm = (userData) => {
-    const [pvData, setPVData] = useState(userData);
+export const DataForm = ({pvDesignData, url}) => {
+    const [pvData, setPVData] = useState(pvDesignData);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -56,10 +56,10 @@ export const DataForm = (userData) => {
                         onChange={handleChange}
                     />
                     <TextField
-                        label="Орієнтація даху (0–180°)"
+                        label="Орієнтація даху (-90° / +90°)"
                         name="roof_orientation"
                         type="number"
-                        inputProps={{ min: 0, max: 180 }}
+                        inputProps={{ min: -90, max: 90 }}
                         value={pvData.roof_orientation || ''}
                         onChange={handleChange}
                     />

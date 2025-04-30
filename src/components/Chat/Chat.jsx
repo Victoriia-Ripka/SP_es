@@ -7,10 +7,7 @@ import { MessagesHistory } from 'components/MessageHistory/MessageHistory';
 import { useEffect } from 'react';
 
 
-// const backendUrl = 'https://sp-es-backend.onrender.com'
-const backendUrl = process.env.REACT_APP_BACKEND_API;
-
-export const Chat = (userData) => {
+export const Chat = ({userData, message, url}) => {
     const [messages, setMessages] = useState([]);
     const [pvData, setPVData] = useState(userData);
     // const [messages, setMessages] = useState(() => {
@@ -32,18 +29,12 @@ export const Chat = (userData) => {
 
     useEffect(() => {
         // if (Object.keys(messages).length === 0) {
-        axios.post(`${backendUrl}/assistant/start`, { pv_user_data: pvData })
-            .then((res) => {
-                const data = res.data;
-                setMessages((prevMessages) => [...prevMessages, { message: data.answer, role: "assistant" }]);
-                setPVData(data.updated_user_data);
-            })
-            .catch((err) => console.log(err));
-        // }
+            setMessages((prevMessages) => [...prevMessages, { message: message, role: "assistant" }]);
+            // }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const onSend = (message) => {
+    const onSend = (message) => { 
         setMessages((prevMessages) => [...prevMessages, { message, role: "user" }]);
 
         const updatedUserData = {
@@ -51,7 +42,7 @@ export const Chat = (userData) => {
             messagesCount: pvData.messagesCount + 1
         };
 
-        axios.post(`${backendUrl}/assistant/ask`, { message, pv_user_data: updatedUserData })
+        axios.post(`${url}/assistant/ask`, { message, pv_user_data: updatedUserData })
             .then(res => {
 
                 const data = res.data;

@@ -1,21 +1,19 @@
-import React, { useState } from 'react';
-import { Box, Button, FormControlLabel, Checkbox, Typography, ToggleButtonGroup, ToggleButton, FormLabel } from '@mui/material';
+import React, { useState , useEffect} from 'react';
+import { Box, Button, Typography, ToggleButtonGroup, ToggleButton, FormLabel } from '@mui/material';
 import axios from 'axios';
 
-export const PVTypeForm = (userData) => {
-    const [pvData, setPVData] = useState(userData);
+export const PVTypeForm = ({pvTypeData, url}) => {
+    const [pvData, setPVData] = useState(pvTypeData);
+
+    useEffect(() => {
+        console.log(pvTypeData)
+    }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Submitted data:', pvData);
-    };
 
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setPVData({
-            ...pvData,
-            [name]: type === 'checkbox' ? checked : value,
-        });
+        axios.post().then().catch(err => console.log(err))
     };
 
     return (
