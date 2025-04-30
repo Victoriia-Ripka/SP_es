@@ -1,19 +1,19 @@
-import React, { useState , useEffect} from 'react';
+import React, { useState } from 'react';
 import { Box, Button, Typography, ToggleButtonGroup, ToggleButton, FormLabel } from '@mui/material';
 import axios from 'axios';
 
-export const PVTypeForm = ({pvTypeData, url}) => {
+export const PVTypeForm = ({ pvTypeData, url }) => {
     const [pvData, setPVData] = useState(pvTypeData);
-    const [pvType, setPvType] = useState('');
+    const [pvType, setPvType] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post(`${url}/expert-system/setPVtype`, {pvData}).then(
+        axios.post(`${url}/expert-system/setPVtype`, { pvData }).then(
             res => {
                 const data = res.data;
                 setPvType(data.type);
-            }  
+            }
         ).catch(err => console.log(err))
     };
 
@@ -70,8 +70,19 @@ export const PVTypeForm = ({pvTypeData, url}) => {
                 Визначити тип СЕС
             </Button>
 
-            { pvType ?? (
-                <Typography> {pvType} </Typography>
+            {pvType.length > 0 && (
+                <>
+                    <Typography> Тип СЕС, що підходить для ваших потреб: </Typography>
+                    <Box>
+                        {
+                            pvType.length > 1
+                                ? (pvType.map((el, index) => (
+                                    <Typography key={index}>{el}</Typography>
+                                )))
+                                : (<Typography>{pvType[0]}</Typography>)
+                        }
+                    </Box>
+                </>
             )}
         </Box>
     );
