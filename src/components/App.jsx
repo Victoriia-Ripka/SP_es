@@ -15,7 +15,7 @@ export const App = () => {
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
-    axios.get(`${backendUrl}/assistant/start`)
+    axios.get(`${backendUrl}/expert-system/start`)
       .then((res) => {
         const data = res.data;
         setMessage(data.answer);

@@ -42,7 +42,7 @@ export const Chat = ({userData, message, url}) => {
             messagesCount: pvData.messagesCount + 1
         };
 
-        axios.post(`${url}/assistant/ask`, { message, pv_user_data: updatedUserData })
+        axios.post(`${url}/expert-system/ask`, { message, pv_user_data: updatedUserData })
             .then(res => {
 
                 const data = res.data;

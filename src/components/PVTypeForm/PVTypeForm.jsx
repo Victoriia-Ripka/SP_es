@@ -4,6 +4,7 @@ import axios from 'axios';
 
 export const PVTypeForm = ({pvTypeData, url}) => {
     const [pvData, setPVData] = useState(pvTypeData);
+    const [pvType, setPvType] = useState('');
 
     useEffect(() => {
         console.log(pvTypeData)
@@ -13,7 +14,13 @@ export const PVTypeForm = ({pvTypeData, url}) => {
         e.preventDefault();
         console.log('Submitted data:', pvData);
 
-        axios.post().then().catch(err => console.log(err))
+        axios.post(`${url}/expert-system/setPVtype`, {pvData}).then(
+            res => {
+                const data = res.data.pvType;
+                console.log(data)
+                setPvType(data)
+            }  
+        ).catch(err => console.log(err))
     };
 
     return (
@@ -68,6 +75,10 @@ export const PVTypeForm = ({pvTypeData, url}) => {
             <Button type="submit" variant="contained" color="success">
                 Визначити тип СЕС
             </Button>
+
+            { pvType ?? (
+                <Typography> {pvType} </Typography>
+            )}
         </Box>
     );
 };
