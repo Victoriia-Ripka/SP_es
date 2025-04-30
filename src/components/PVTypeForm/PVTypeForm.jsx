@@ -6,19 +6,13 @@ export const PVTypeForm = ({pvTypeData, url}) => {
     const [pvData, setPVData] = useState(pvTypeData);
     const [pvType, setPvType] = useState('');
 
-    useEffect(() => {
-        console.log(pvTypeData)
-    }, [])
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Submitted data:', pvData);
 
         axios.post(`${url}/expert-system/setPVtype`, {pvData}).then(
             res => {
-                const data = res.data.pvType;
-                console.log(data)
-                setPvType(data)
+                const data = res.data;
+                setPvType(data.type);
             }  
         ).catch(err => console.log(err))
     };
