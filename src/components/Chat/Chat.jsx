@@ -1,32 +1,18 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import { Container } from '@mui/material';
-import { Form } from 'components/Form/Form';
+import { MessageForm } from 'components/MessageForm/MessageForm';
 import axios from 'axios';
 import { MessagesHistory } from 'components/MessageHistory/MessageHistory';
 import { useEffect } from 'react';
 
 
-const backendUrl = 'https://sp-es-backend.onrender.com'
-// const backendUrl = process.env.REACT_APP_BACKEND_API;
+// const backendUrl = 'https://sp-es-backend.onrender.com'
+const backendUrl = process.env.REACT_APP_BACKEND_API;
 
-const pvStartedData = {
-    intent: "", // актуальний намір користувача
-    power: 0,
-    pvType: "",
-    pvSquare: 0,
-    pvInstalationPlace: "",
-
-    cache: {
-        history: [],
-        original_intent: '' // оригінальний намір експертної системи
-    },
-    messagesCount: 0
-}
-
-export const Chat = () => {
-    const [messages, setMessages] = useState([])
-    const [pvData, setPVData] = useState(pvStartedData)
+export const Chat = (userData) => {
+    const [messages, setMessages] = useState([]);
+    const [pvData, setPVData] = useState(userData);
     // const [messages, setMessages] = useState(() => {
     //     const savedMessages = localStorage.getItem("messages");
     //     return savedMessages ? JSON.parse(savedMessages) : [];
@@ -83,7 +69,7 @@ export const Chat = () => {
                 <MessagesHistory messages={messages} />
             </Box>
 
-            <Form sx={{ p: 2 }} onSend={onSend} />
+            <MessageForm sx={{ p: 2 }} onSend={onSend} />
         </Container>
     );
 };
