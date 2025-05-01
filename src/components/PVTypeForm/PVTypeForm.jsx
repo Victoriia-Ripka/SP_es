@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, Typography, ToggleButtonGroup, ToggleButton, FormLabel } from '@mui/material';
 import axios from 'axios';
 
@@ -7,7 +7,11 @@ export const PVTypeForm = ({ pvTypeData, url, setSelectedPVTypes }) => {
     const [is_possible_electricity_grid_connection, setIsPossibleElectricityGridConnection] = useState(pvTypeData.is_possible_electricity_grid_connection);
     const [is_exist_money_limit, setIsExistMoneyLimit] = useState(pvTypeData.is_exist_money_limit);
 
-    const [pvType, setPvType] = useState([]);
+    const [pvType, setPvType] = useState([]); // on-grid
+
+    // useEffect(() => {
+    //     setSelectedPVTypes(pvType)
+    // }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -22,7 +26,7 @@ export const PVTypeForm = ({ pvTypeData, url, setSelectedPVTypes }) => {
     };
 
     return (
-        <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2, my: 5 }}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}> 
             <Typography variant="h6">Вибір типу СЕС</Typography>
 
             <FormLabel sx={{ mb: 1 }}>Чи важлива електрична автономність?</FormLabel>
@@ -74,19 +78,21 @@ export const PVTypeForm = ({ pvTypeData, url, setSelectedPVTypes }) => {
                 Визначити тип СЕС
             </Button>
 
-            {pvType.length > 0 && (
+            {pvType.length ? (
                 <>
-                    <Typography> Тип СЕС, що підходить для ваших потреб: </Typography>
-                    <Box>
+                    <Typography sx={{textAlign: 'left'}}> Тип СЕС, що підходить для ваших потреб: </Typography>
+                    <Box sx={{display: 'flex', gap: 1}}>
                         {
                             pvType.length > 1
                                 ? (pvType.map((el, index) => (
-                                    <Typography key={index}>{el}</Typography>
+                                    <Typography key={index} sx={{fontWeight: 'bold'}}>{el}</Typography>
                                 )))
-                                : (<Typography>{pvType[0]}</Typography>)
+                                : (<Typography sx={{fontWeight: 'bold'}}>{pvType[0]}</Typography>)
                         }
                     </Box>
                 </>
+            ) : (
+                <Box sx={{height: 65}}></Box>
             )}
         </Box>
     );

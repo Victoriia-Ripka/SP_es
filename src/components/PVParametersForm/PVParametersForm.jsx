@@ -15,7 +15,7 @@ export const PVParametersForm = ({ pvDesignData, url, selectedPVTypes }) => {
         e.preventDefault();
         console.log('Submitted data:', pvData);
 
-        axios.post(`${url}/expert-system/design`, {})
+        axios.post(`${url}/expert-system/designPV`, {pvData})
         .then()
         .catch( err => console.log(err))
     };
@@ -50,6 +50,7 @@ export const PVParametersForm = ({ pvDesignData, url, selectedPVTypes }) => {
                     value={pvData.pv_instalation_place}
                     onChange={handleChange}
                     row
+                    required
                 >
                     <FormControlLabel value="дах" control={<Radio />} label="Дах" />
                     <FormControlLabel value="земля" control={<Radio />} label="Земля" />
