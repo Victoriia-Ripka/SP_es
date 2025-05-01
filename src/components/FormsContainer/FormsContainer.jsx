@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-import { DataForm } from 'components/Form/Form';
+import { PVParametersForm } from 'components/PVParametersForm/PVParametersForm';
 import { PVTypeForm } from 'components/PVTypeForm/PVTypeForm';
 
 export const FormsContainer = ({pvDesignData, pvTypeData, url}) => {
+    const [selectedPVTypes, setSelectedPVTypes] = useState([]);
 
     return (
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <PVTypeForm pvTypeData={pvTypeData} url={url} />
+            <PVTypeForm pvTypeData={pvTypeData} url={url} setSelectedPVTypes={setSelectedPVTypes} />
 
-            <DataForm pvDesignData={pvDesignData} url={url}/>
+            <PVParametersForm pvDesignData={pvDesignData} url={url} selectedPVTypes={selectedPVTypes}/>
 
         </Box>
     );

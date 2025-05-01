@@ -1,20 +1,31 @@
-import React, { useState } from 'react';
-import { Box, Button, TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Typography } from '@mui/material';
-// import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Box, Button, TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Typography, Select, MenuItem } from '@mui/material';
+import axios from 'axios';
 
-export const DataForm = ({pvDesignData, url}) => {
+export const PVParametersForm = ({ pvDesignData, url, selectedPVTypes }) => {
     const [pvData, setPVData] = useState(pvDesignData);
+    const [pvTypes, setPVTypes] = useState([]);
+
+    useEffect(() => {
+        setPVTypes(selectedPVTypes);
+    }, [selectedPVTypes]);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Submitted data:', pvData);
+
+        axios.post(`${url}/expert-system/design`, {})
+        .then()
+        .catch( err => console.log(err))
     };
 
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
+        const { name, value } = e.target;
+        console.log(name, value)
         setPVData({
             ...pvData,
-            [name]: type === 'checkbox' ? checked : value,
+            [name]: value,
         });
     };
 
@@ -26,7 +37,7 @@ export const DataForm = ({pvDesignData, url}) => {
                 label="PV Потужність (кВт)"
                 name="pv_power"
                 type="number"
-                inputProps={{ min: 0.01, max: 14.99, step: 0.01 }}
+                // inputProps={{ min: 1.0, max: 15.0, step: 0.1 }}
                 value={pvData.pv_power}
                 onChange={handleChange}
                 required
@@ -51,7 +62,7 @@ export const DataForm = ({pvDesignData, url}) => {
                         label="Кут нахилу даху (0–90°)"
                         name="roof_tilt"
                         type="number"
-                        inputProps={{ min: 0, max: 90 }}
+                        // inputProps={{ min: 0, max: 90, step: 1 }}
                         value={pvData.roof_tilt || ''}
                         onChange={handleChange}
                     />
@@ -59,7 +70,7 @@ export const DataForm = ({pvDesignData, url}) => {
                         label="Орієнтація даху (-90° / +90°)"
                         name="roof_orientation"
                         type="number"
-                        inputProps={{ min: -90, max: 90 }}
+                        // inputProps={{ min: -90, max: 90, step: 1 }}
                         value={pvData.roof_orientation || ''}
                         onChange={handleChange}
                     />
@@ -70,8 +81,33 @@ export const DataForm = ({pvDesignData, url}) => {
                 label="Площа PV (м²)"
                 name="pv_area"
                 type="number"
-                inputProps={{ min: 0.01, step: 0.01 }}
+                // inputProps={{ min: 1, step: 0.1 }}
                 value={pvData.pv_area}
+                onChange={handleChange}
+                required
+            />
+
+            <FormControl>
+                <FormLabel>Обраний тип СЕС</FormLabel>
+                <Select
+                    label="Тип СЕС"
+                    name="pv_type"
+                    id="pv_type"
+                    value={pvData.pv_type || ''}
+                    onChange={handleChange}
+                    required
+                >
+                    {pvTypes.map((item, idx) => 
+                        <MenuItem key={idx} value={ item }>{item}</MenuItem>
+                    )}
+                </Select>
+            </FormControl>
+
+            <TextField
+                label="Локалізація"
+                name="pv_location"
+                type="string"
+                value={pvData.pv_location}
                 onChange={handleChange}
                 required
             />
