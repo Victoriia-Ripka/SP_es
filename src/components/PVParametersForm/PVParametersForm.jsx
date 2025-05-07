@@ -4,33 +4,33 @@ import axios from 'axios';
 
 const regionsList = [
     'АР Крим',
-    'Вінницька область',
+    // 'Вінницька область',
     'Волинська область',
-    'Дніпропетровська область',
+    // 'Дніпропетровська область',
     'Донецька область',
     'Житомирська область',
     'Закарпатська область',
     'Запорізька область',
-    'Івано-Франківська область',
+    // 'Івано-Франківська область',
     'Київська область',
     'Кіровоградська область',
     'Луганська область',
-    'Львівська область',
+    // 'Львівська область',
     'Миколаївська область',
     'Одеська область',
     'Полтавська область',
-    'Рівненська область',
+    // 'Рівненська область',
     'Сумська область',
-    'Тернопільська область',
-    'Харківська область',
+    // 'Тернопільська область',
+    // 'Харківська область',
     'Херсонська область',
     'Хмельницька область',
-    'Черкаська область',
-    'Чернівецька область',
-    'Чернігівська'
+    // 'Черкаська область',
+    // 'Чернівецька область',
+    'Чернігівська область'
 ]
 
-export const PVParametersForm = ({ pvDesignData, url, selectedPVTypes }) => {
+export const PVParametersForm = ({ pvDesignData, url, selectedPVTypes, setPvDesign }) => {
     const [pvData, setPVData] = useState(pvDesignData);
     const [pvTypes, setPVTypes] = useState([]);
 
@@ -41,14 +41,10 @@ export const PVParametersForm = ({ pvDesignData, url, selectedPVTypes }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (pvData.pv_instalation_place === "земля") {
-            setPVData({ ...pvData, roof_tilt: -1, roof_orientation: -1 })
-        }
-
-        console.log('Submitted data:', pvData);
-
         axios.post(`${url}/expert-system/designPV`, { pvData })
-            .then(res => console.log(res))
+            .then(res => {
+                setPvDesign(res.data);
+            })
             .catch(err => console.log(err))
     };
 
@@ -66,14 +62,15 @@ export const PVParametersForm = ({ pvDesignData, url, selectedPVTypes }) => {
             }));
 
         } else {
-            setPVData({
-                ...pvData,
-                [name]: value,
-            });
+            if (value === "земля") {
+                setPVData({ ...pvData, [name]: value, roof_tilt: -1, roof_orientation: -1 })
+            } else {
+                setPVData({
+                    ...pvData,
+                    [name]: value,
+                });
+            }
         }
-
-        console.log(name, value)
-
     };
 
     return (
