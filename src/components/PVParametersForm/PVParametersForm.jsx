@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Typography, Select, MenuItem } from '@mui/material';
+import { Box, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Typography, Select, MenuItem } from '@mui/material';
 import axios from 'axios';
+import { NumberInput } from 'components/NumberInput/NumberInput';
 
 const regionsList = [
     'АР Крим',
@@ -64,7 +65,9 @@ export const PVParametersForm = ({ pvDesignData, url, selectedPVTypes, setPvDesi
         } else {
             if (value === "земля") {
                 setPVData({ ...pvData, [name]: value, roof_tilt: -1, roof_orientation: -1 })
-            } else {
+            } else if (value === "дах") {
+                setPVData({ ...pvData, [name]: value, roof_tilt: 0, roof_orientation: 0 })
+            }else {
                 setPVData({
                     ...pvData,
                     [name]: value,
@@ -77,11 +80,11 @@ export const PVParametersForm = ({ pvDesignData, url, selectedPVTypes, setPvDesi
         <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2, my: 5 }}>
             <Typography variant="h6">Параметри сонячної електростанції</Typography>
 
-            <TextField
+            <NumberInput
                 label="PV Потужність (кВт)"
                 name="pv_power"
                 type="number"
-                // inputProps={{ min: 1.0, max: 15.0, step: 0.1 }}
+                min={1.0} max={100} step={1}
                 value={pvData.pv_power}
                 onChange={handleChange}
                 required
@@ -103,19 +106,19 @@ export const PVParametersForm = ({ pvDesignData, url, selectedPVTypes, setPvDesi
 
             {pvData.pv_instalation_place === 'дах' && (
                 <>
-                    <TextField
+                    <NumberInput
                         label="Кут нахилу даху (0–90°)"
                         name="roof_tilt"
                         type="number"
-                        // inputProps={{ min: 0, max: 90, step: 1 }}
+                        min={0} max={90} step={5}
                         value={pvData.roof_tilt || ''}
                         onChange={handleChange}
                     />
-                    <TextField
+                    <NumberInput
                         label="Орієнтація даху (0° / 360°)"
                         name="roof_orientation"
                         type="number"
-                        // inputProps={{ min: -90, max: 90, step: 1 }}
+                        min={0} max={360} step={5}
                         value={pvData.roof_orientation || ''}
                         onChange={handleChange}
                     />
@@ -123,21 +126,20 @@ export const PVParametersForm = ({ pvDesignData, url, selectedPVTypes, setPvDesi
             )}
 
             <Box sx={{ display: 'flex', gap: 2 }}>
-                <TextField
+                <NumberInput
                     label="Довжина (м)"
                     name="pv_area.length"
                     type="number"
-                    // inputProps={{ min: 1, step: 0.1 }}
+                    min={0.0} step={0.1}
                     value={pvData.pv_area.length}
                     onChange={handleChange}
                     required
                 />
-
-                <TextField
+                <NumberInput
                     label="Ширина (м)"
                     name="pv_area.width"
                     type="number"
-                    // inputProps={{ min: 1, step: 0.1 }}
+                    min={1.0} step={0.1}
                     value={pvData.pv_area.width}
                     onChange={handleChange}
                     required

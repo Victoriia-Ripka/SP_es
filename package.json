@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://Victoriia-Ripka.github.io/SP_es/",
   "dependencies": {
+    "@base-ui-components/react": "^1.0.0-alpha.8",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/material": "^7.0.2",

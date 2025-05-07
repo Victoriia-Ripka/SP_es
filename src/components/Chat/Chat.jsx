@@ -76,7 +76,7 @@ export const Chat = ({ userData, message, url, systemComments }) => {
     };
 
     return (
-        <Container disableGutters sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+        <Container disableGutters sx={{ display: 'flex', flexDirection: 'column', flex: 1, maxWidth: 410, maxHeight: 'calc(100vh - 68px)' }}>
             <Box sx={{ flex: 1, overflowY: 'auto', border: '1px solid #ccc', p: 2 }}>
                 <MessagesHistory messages={messages} />
             </Box>
