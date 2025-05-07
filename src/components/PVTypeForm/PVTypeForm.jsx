@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Button, Typography, ToggleButtonGroup, ToggleButton, FormLabel } from '@mui/material';
 import axios from 'axios';
 
@@ -7,11 +7,7 @@ export const PVTypeForm = ({ pvTypeData, url, setSelectedPVTypes }) => {
     const [is_possible_electricity_grid_connection, setIsPossibleElectricityGridConnection] = useState(pvTypeData.is_possible_electricity_grid_connection);
     const [is_exist_money_limit, setIsExistMoneyLimit] = useState(pvTypeData.is_exist_money_limit);
 
-    const [pvType, setPvType] = useState([]); // on-grid
-
-    // useEffect(() => {
-    //     setSelectedPVTypes(pvType)
-    // }, [])
+    const [pvType, setPvType] = useState([]); 
 
     const handleSubmit = (e) => {
         e.preventDefault();
