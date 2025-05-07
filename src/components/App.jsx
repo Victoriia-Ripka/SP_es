@@ -36,7 +36,7 @@ export const App = () => {
   return (
     <Container maxWidth="md" sx={{ display: 'flex', flexDirection: 'column', height: '100vh', gap: 2 }}>
       <Box component="section" sx={{ p: 1, border: '1px dashed grey' }}>
-        <p>Експертна система для проєктування СЕС</p>
+        <p>Експертна система для оптимального налаштування СЕС</p>
       </Box>
 
       <Box sx={{ flex: 1, display: 'flex', flexDirection: 'row', gap: 10 }}>
