@@ -12,13 +12,13 @@ export const Message = ({ message }) => {
             p={1.5}
             px={2}
             borderRadius={2}
-            maxWidth="70%"
+            maxWidth="280px"
             boxShadow={1}
         >
             <Typography variant="body2" fontWeight="bold" gutterBottom>
                 {isUser ? 'Ви' : 'Асистент'}
             </Typography>
-            <Typography variant="body1" align="left">
+            <Typography variant="body1" align="left" >
                 {message.message}
             </Typography>
         </Box>
