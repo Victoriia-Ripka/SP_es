@@ -18,7 +18,7 @@ export const PVconfigurationContainer = ({ pvDesignOptions }) => {
             setOptimalOrientation(pvDesignOptions.optimalPVOrientation || null);
             setOptimalAngle(pvDesignOptions.optimalPVAngle || null);
             setPvElements(Array.isArray(pvDesignOptions.pvElements) ? [...pvDesignOptions.pvElements] : []);
-            setPvOptions(Array.isArray(pvDesignOptions.threeOptions) ? [...pvDesignOptions.threeOptions] : [])
+            setPvOptions(Array.isArray(pvDesignOptions.options) ? [...pvDesignOptions.options] : [])
         }
     }, [pvDesignOptions])
 

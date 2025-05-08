@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Box, Typography, Grid, Paper } from '@mui/material';
+import { BarChart } from '@mui/x-charts/BarChart';
 import { useState } from 'react';
 
 export const PVdesign = ({ pvOption }) => {
@@ -9,8 +10,9 @@ export const PVdesign = ({ pvOption }) => {
     const [inverter, setInverter] = useState(null);
     const [panel, setPanel] = useState(null);
     const [charge, setCharge] = useState(null);
-    // eslint-disable-next-line no-unused-vars
-    const [additionalElements, setAdditionalElements] = useState(null);
+    const [dataset, setDataset] = useState([]);
+    const [insolationForecast, setInsolationForecast] = useState(null);
+    // const [additionalElements, setAdditionalElements] = useState(null);
 
     useEffect(() => {
         if (pvOption) {
@@ -23,6 +25,17 @@ export const PVdesign = ({ pvOption }) => {
                 setCharge(pvOption.charge)
             }
 
+            const monthes = ['І', 'ІІ', 'ІІІ', 'ІV', 'V', 'VІ', 'VІІ', 'VІІІ', 'ІX', 'X', 'XІ', 'XІІ']
+
+            const prepearedDataBarChart = pvOption?.insolation_forecast?.map((item, idx) => {
+                return {
+                    month: monthes[idx],
+                    data: item
+                }
+            })
+
+            setDataset(prepearedDataBarChart)
+            setInsolationForecast(pvOption.year_production)
         }
     }, [pvOption])
 
@@ -40,6 +53,8 @@ export const PVdesign = ({ pvOption }) => {
                         <Typography sx={{ textAlign: 'left', fontWeight: 'bold' }}>{totalPrice || 'не визначено'} грн</Typography>
                         <Typography sx={{ textAlign: 'left' }} variant="subtitle1">Загальна вага панелей:</Typography>
                         <Typography sx={{ textAlign: 'left', fontWeight: 'bold' }}>{totalPanelsWeights || 'не визначено'} кг</Typography>
+                        <Typography sx={{ textAlign: 'left' }} variant="subtitle1">Сумарна генерація е-енергії за рік:</Typography>
+                        <Typography sx={{ textAlign: 'left', fontWeight: 'bold' }}>{insolationForecast || 'не визначено'} кВт*год</Typography>
                     </Paper>
                 </Grid>
 
@@ -83,6 +98,21 @@ export const PVdesign = ({ pvOption }) => {
                         </Paper>
                     </Grid>
                 )}
+
+                <Grid item xs={12} md={4}>
+                    <Paper elevation={3} sx={{ p: 2 }}>
+                        <Typography variant="h6" gutterBottom sx={{ textAlign: 'left', fontWeight: 'bold' }}>Прогнозуване вироблення електроенергії протягом року</Typography>
+
+                        <BarChart
+                            height={290}
+                            dataset={dataset}
+                            series={[{ dataKey: 'data', label: 'Інсоляція' }]}
+                            xAxis={[{ dataKey: 'month', label: 'Місяць' }]}
+                        />
+                    </Paper>
+                </Grid>
+
+
             </Grid>
 
         </Box>
