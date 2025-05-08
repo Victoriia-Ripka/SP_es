@@ -22,22 +22,24 @@ export const PVdesign = ({ pvOption }) => {
             setInverter(pvOption.inverter);
             setPanel(pvOption.panel);
             if (pvOption.charge) {
-                setCharge(pvOption.charge)
+                setCharge(pvOption.charge);
             }
 
-            const monthes = ['І', 'ІІ', 'ІІІ', 'ІV', 'V', 'VІ', 'VІІ', 'VІІІ', 'ІX', 'X', 'XІ', 'XІІ']
+            const monthes = ['І', 'ІІ', 'ІІІ', 'ІV', 'V', 'VІ', 'VІІ', 'VІІІ', 'ІX', 'X', 'XІ', 'XІІ'];
 
             const prepearedDataBarChart = pvOption?.insolation_forecast?.map((item, idx) => {
                 return {
                     month: monthes[idx],
                     data: item
                 }
-            })
+            });
 
-            setDataset(prepearedDataBarChart)
-            setInsolationForecast(pvOption.year_production)
+            setDataset(prepearedDataBarChart);
+            setInsolationForecast(pvOption.year_production);
+
+            console.log(pvOption);
         }
-    }, [pvOption])
+    }, [pvOption]);
 
     return (
         <Box display="flex" flexDirection="column" gap={1}>

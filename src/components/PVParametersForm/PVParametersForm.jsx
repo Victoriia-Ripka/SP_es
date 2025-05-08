@@ -29,7 +29,7 @@ const regionsList = [
     // 'Черкаська область',
     // 'Чернівецька область',
     'Чернігівська область'
-]
+];
 
 export const PVParametersForm = ({ pvDesignData, url, selectedPVTypes, setPvDesign }) => {
     const [pvData, setPVData] = useState(pvDesignData);
@@ -46,7 +46,7 @@ export const PVParametersForm = ({ pvDesignData, url, selectedPVTypes, setPvDesi
             .then(res => {
                 setPvDesign(res.data);
             })
-            .catch(err => console.log(err))
+            .catch(err => console.log(err));
     };
 
     const handleChange = (e) => {
@@ -64,9 +64,9 @@ export const PVParametersForm = ({ pvDesignData, url, selectedPVTypes, setPvDesi
 
         } else {
             if (value === "земля") {
-                setPVData({ ...pvData, [name]: value, roof_tilt: -1, roof_orientation: -1 })
+                setPVData({ ...pvData, [name]: value, roof_tilt: -1, roof_orientation: -1 });
             } else if (value === "дах") {
-                setPVData({ ...pvData, [name]: value, roof_tilt: 0, roof_orientation: 0 })
+                setPVData({ ...pvData, [name]: value, roof_tilt: 0, roof_orientation: 0 });
             }else {
                 setPVData({
                     ...pvData,

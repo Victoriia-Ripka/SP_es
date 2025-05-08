@@ -39,11 +39,11 @@ export const Chat = ({ userData, message, url, systemComments }) => {
             } else {
                 assistantAnswer += comment;
             }
-        })
+        });
 
         if(assistantAnswer){
             setMessages((prevMessages) => [...prevMessages, { message: assistantAnswer, role: "assistant" }]);
-        }
+        };
         
       }, [systemComments]);
 
@@ -72,7 +72,7 @@ export const Chat = ({ userData, message, url, systemComments }) => {
                 setPVData(data.updated_user_data);
             }).catch(err => console.error(err)).finally(
                 console.log(pvData)
-            )
+            );
     };
 
     return (

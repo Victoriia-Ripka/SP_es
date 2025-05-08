@@ -18,9 +18,9 @@ export const PVconfigurationContainer = ({ pvDesignOptions }) => {
             setOptimalOrientation(pvDesignOptions.optimalPVOrientation || null);
             setOptimalAngle(pvDesignOptions.optimalPVAngle || null);
             setPvElements(Array.isArray(pvDesignOptions.pvElements) ? [...pvDesignOptions.pvElements] : []);
-            setPvOptions(Array.isArray(pvDesignOptions.options) ? [...pvDesignOptions.options] : [])
+            setPvOptions(Array.isArray(pvDesignOptions.options) ? [...pvDesignOptions.options] : []);
         }
-    }, [pvDesignOptions])
+    }, [pvDesignOptions]);
 
     return (
         <Box display="flex" flexDirection="column" gap={1}>
