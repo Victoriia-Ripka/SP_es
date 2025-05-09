@@ -6,7 +6,7 @@ import axios from 'axios';
 import { FormsContainer } from './FormsContainer/FormsContainer';
 import { PVconfigurationContainer } from './PVconfiguration/PVconfiguration';
 
-const backendUrl = 'https://sp-es-backend.onrender.com'
+const backendUrl = 'https://sp-es-backend-2.onrender.com';
 // const backendUrl = process.env.REACT_APP_BACKEND_API;
 
 export const App = () => {
@@ -22,7 +22,7 @@ export const App = () => {
   useEffect(() => {
     setSystemComments(pvDesign?.answer)
     setPvDesignOptions(pvDesign?.pv);
-  }, [pvDesign])
+  }, [pvDesign]);
 
   useEffect(() => {
     axios.get(`${backendUrl}/expert-system/start`)
@@ -32,10 +32,10 @@ export const App = () => {
         setpvUserData(data.pv_user_data);
 
         setPvDesignData(data.pv_user_data['data_designing_pv']);
-        setPvTypeData(data.pv_user_data['data_determining_pv_type'])
+        setPvTypeData(data.pv_user_data['data_determining_pv_type']);
       })
       .catch((err) => console.log(err));
-  }, [])
+  }, []);
 
   return (
     <Container maxWidth="md" sx={{ display: 'flex', flexDirection: 'column', height: '100vh', gap: 2 }}>
