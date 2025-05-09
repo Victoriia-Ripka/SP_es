@@ -71,7 +71,7 @@ export const PVTypeForm = ({ pvTypeData, url, setSelectedPVTypes }) => {
             </ToggleButtonGroup>
 
             <Button type="submit" variant="contained" color="success">
-                Визначити тип СЕС
+                Визначити вид СЕС
             </Button>
 
             {pvType.length ? (

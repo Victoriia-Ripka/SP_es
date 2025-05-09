@@ -147,9 +147,9 @@ export const PVParametersForm = ({ pvDesignData, url, selectedPVTypes, setPvDesi
             </Box>
 
             <FormControl>
-                <FormLabel>Обраний тип СЕС</FormLabel>
+                <FormLabel>Обраний вид СЕС</FormLabel>
                 <Select
-                    label="Тип СЕС"
+                    label="Вид СЕС"
                     name="pv_type"
                     id="pv_type"
                     value={pvData.pv_type || ''}
