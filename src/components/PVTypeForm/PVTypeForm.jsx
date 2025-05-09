@@ -23,7 +23,7 @@ export const PVTypeForm = ({ pvTypeData, url, setSelectedPVTypes }) => {
 
     return (
         <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}> 
-            <Typography variant="h6">Вибір типу СЕС</Typography>
+            <Typography variant="h6">Вибір виду СЕС</Typography>
 
             <FormLabel sx={{ mb: 1 }}>Чи важлива електрична автономність?</FormLabel>
             <ToggleButtonGroup
