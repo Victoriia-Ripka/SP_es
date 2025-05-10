@@ -10,22 +10,6 @@ import { useEffect } from 'react';
 export const Chat = ({ userData, message, url, systemComments }) => {
     const [messages, setMessages] = useState([]);
     const [pvData, setPVData] = useState(userData);
-    // const [messages, setMessages] = useState(() => {
-    //     const savedMessages = localStorage.getItem("messages");
-    //     return savedMessages ? JSON.parse(savedMessages) : [];
-    // });
-    // const [pvData, setPVData] = useState(() => {
-    //     const savedPvData = localStorage.getItem("pvData");
-    //     return savedPvData ? JSON.parse(savedPvData) : pvStartedData;
-    // });
-
-    // useEffect(() => {
-    //     localStorage.setItem("pvData", JSON.stringify(pvData));
-    // }, [pvData]);
-
-    // useEffect(() => {
-    //     localStorage.setItem("messages", JSON.stringify(messages));
-    // }, [messages]);
 
     useEffect(() => {
         let assistantAnswer = '';
@@ -49,9 +33,7 @@ export const Chat = ({ userData, message, url, systemComments }) => {
 
 
     useEffect(() => {
-        // if (Object.keys(messages).length === 0) {
         setMessages((prevMessages) => [...prevMessages, { message: message, role: "assistant" }]);
-        // }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -70,9 +52,7 @@ export const Chat = ({ userData, message, url, systemComments }) => {
                 // added new updated user data from backend
                 setMessages((prevMessages) => [...prevMessages, { message: data.answer, role: "assistant" }]);
                 setPVData(data.updated_user_data);
-            }).catch(err => console.error(err)).finally(
-                console.log(pvData)
-            );
+            }).catch(err => console.error(err));
     };
 
     return (
