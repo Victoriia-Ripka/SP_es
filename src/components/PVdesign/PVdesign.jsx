@@ -101,7 +101,7 @@ export const PVdesign = ({ pvOption }) => {
                     </Grid>
                 )}
 
-                <Grid item xs={12} md={4}>
+                {pvOption.year_production && (<Grid item xs={12} md={4}>
                     <Paper elevation={3} sx={{ p: 2 }}>
                         <Typography variant="h6" gutterBottom sx={{ textAlign: 'left', fontWeight: 'bold' }}>Прогнозуване вироблення електроенергії протягом року</Typography>
 
@@ -112,7 +112,7 @@ export const PVdesign = ({ pvOption }) => {
                             xAxis={[{ dataKey: 'month', label: 'Місяць' }]}
                         />
                     </Paper>
-                </Grid>
+                </Grid>)}
 
 
             </Grid>
