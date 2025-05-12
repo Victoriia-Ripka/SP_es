@@ -12,13 +12,14 @@ export const ExtraPVElement = ({ element, elName }) => {
         if (element) {
             setPrice(element.price);
             setModel(element.model);
+            setType(element.type);
             setProducer(element.producer);
 
             if(elName === 'counters'){
-                setName('лічильник')
+                setName('лічильник');
             }
             if(elName === 'distribution_boards'){
-                setName('розподільний щит')
+                setName('розподільний щит');
             }
         }
     }, [element, elName]);
