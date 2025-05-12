@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Box, Typography, Grid, Paper } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { useState } from 'react';
+import { ExtraPVElement } from '../ExtraElement/ExtraElement'
 
 export const PVdesign = ({ pvOption }) => {
     const [totalPrice, setTotalPrice] = useState(0);
@@ -12,7 +13,7 @@ export const PVdesign = ({ pvOption }) => {
     const [charge, setCharge] = useState(null);
     const [dataset, setDataset] = useState([]);
     const [insolationForecast, setInsolationForecast] = useState(null);
-    // const [additionalElements, setAdditionalElements] = useState(null);
+    const [additionalElements, setAdditionalElements] = useState(null);
 
     useEffect(() => {
         if (pvOption) {
@@ -23,10 +24,11 @@ export const PVdesign = ({ pvOption }) => {
             setPanel(pvOption.panel);
             if (pvOption.charge) {
                 setCharge(pvOption.charge);
+            } else {
+                setCharge(null);
             }
 
             const monthes = ['І', 'ІІ', 'ІІІ', 'ІV', 'V', 'VІ', 'VІІ', 'VІІІ', 'ІX', 'X', 'XІ', 'XІІ'];
-
             const prepearedDataBarChart = pvOption?.insolation_forecast?.map((item, idx) => {
                 return {
                     month: monthes[idx],
@@ -36,8 +38,8 @@ export const PVdesign = ({ pvOption }) => {
 
             setDataset(prepearedDataBarChart);
             setInsolationForecast(pvOption.year_production);
-
-            console.log(pvOption);
+            setAdditionalElements(pvOption.extra_elements);
+            // console.log(pvOption);
         }
     }, [pvOption]);
 
@@ -113,6 +115,11 @@ export const PVdesign = ({ pvOption }) => {
                         />
                     </Paper>
                 </Grid>)}
+
+                {additionalElements &&
+                    Object.entries(additionalElements).map(([key, element]) => (
+                        <ExtraPVElement key={key} element={element} elName={key} />
+                    ))}
 
 
             </Grid>
