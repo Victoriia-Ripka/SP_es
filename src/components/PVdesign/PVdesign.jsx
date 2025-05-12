@@ -39,7 +39,7 @@ export const PVdesign = ({ pvOption }) => {
             setDataset(prepearedDataBarChart);
             setInsolationForecast(pvOption.year_production);
             setAdditionalElements(pvOption.extra_elements);
-            // console.log(pvOption);
+            console.log(pvOption);
         }
     }, [pvOption]);
 

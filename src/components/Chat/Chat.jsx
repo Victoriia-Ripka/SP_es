@@ -15,7 +15,6 @@ export const Chat = ({ userData, message, url, systemComments }) => {
         let assistantAnswer = '';
         systemComments?.forEach(item => {
             const comment = item[0];
-            console.log(comment)
             if(typeof comment === "string" && comment.includes('rule ok: ')){
                 assistantAnswer += comment.replace('rule ok: ', '');
             } else if(typeof comment === "object" ) {

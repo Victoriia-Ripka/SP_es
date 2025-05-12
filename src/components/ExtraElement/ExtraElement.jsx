@@ -13,7 +13,6 @@ export const ExtraPVElement = ({ element, elName }) => {
             setPrice(element.price);
             setModel(element.model);
             setProducer(element.producer);
-            setType(element.type);
 
             if(elName === 'counters'){
                 setName('лічильник')
