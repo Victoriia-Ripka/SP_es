@@ -6,8 +6,8 @@ import axios from 'axios';
 import { FormsContainer } from './FormsContainer/FormsContainer';
 import { PVconfigurationContainer } from './PVconfiguration/PVconfiguration';
 
-// const backendUrl = 'https://sp-es-backend-2.onrender.com';
-const backendUrl = process.env.REACT_APP_BACKEND_API;
+const backendUrl = 'https://sp-es-backend-2.onrender.com';
+// const backendUrl = process.env.REACT_APP_BACKEND_API;
 
 export const App = () => {
   const [pvUserData, setpvUserData] = useState(null);
